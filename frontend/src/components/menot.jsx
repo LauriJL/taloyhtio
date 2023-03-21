@@ -4,8 +4,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Menot() {
-  const baseURL = "http://127.0.0.1:8000/api";
-  const link = `${baseURL}/menot/`;
+  const baseURL = "http://127.0.0.1:8000/api/menot/";
+  const link = `${baseURL}`;
 
   const [menot, setMenot] = useState([]);
   // WIP: sums to table
@@ -16,6 +16,27 @@ function Menot() {
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
+
+    setMenot(response.results);
+
+    if (response.next) {
+      setNextURL(response.next);
+    } else {
+      setNextURL(null);
+    }
+
+    if (response.previous) {
+      setPrevURL(response.previous);
+    } else {
+      setPrevURL(null);
+    }
+  };
+
+  const paginationHandler = async (url) => {
+    let response = await (await fetch(url)).json();
+
+    setNextURL(response.next);
+    setPrevURL(response.previous);
     setMenot(response.results);
   };
 
@@ -72,6 +93,46 @@ function Menot() {
                 </tbody>
               </table>
             </div>
+            {/* Pagination start */}
+            <nav>
+              <ul className="pagination justify-content-center">
+                {!prevURL && (
+                  <li className="page-item">
+                    <button className="page-link disabled">
+                      <i className="fa-solid fa-angles-left"></i> Edellinen
+                    </button>
+                  </li>
+                )}
+                {prevURL && (
+                  <li className="page-item">
+                    <button
+                      className="page-link"
+                      onClick={() => paginationHandler(prevURL)}
+                    >
+                      <i className="fa-solid fa-angles-left"></i> Edellinen
+                    </button>
+                  </li>
+                )}
+                {!nextURL && (
+                  <li className="page-item">
+                    <button className="page-link disabled">
+                      Seuraava <i className="fa-solid fa-angles-right"></i>
+                    </button>
+                  </li>
+                )}
+                {nextURL && (
+                  <li className="page-item">
+                    <button
+                      className="page-link"
+                      onClick={() => paginationHandler(nextURL)}
+                    >
+                      Seuraava <i className="fa-solid fa-angles-right"></i>
+                    </button>
+                  </li>
+                )}
+              </ul>
+            </nav>
+            {/* Pagination end */}
           </div>
         </div>
       </div>

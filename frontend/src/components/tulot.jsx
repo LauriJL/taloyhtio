@@ -5,7 +5,7 @@ import React from "react";
 function Tulot() {
   const baseURL = "http://127.0.0.1:8000/api";
   const link = `${baseURL}/tulot/`;
-  const [tiedot, setTiedot] = useState([]);
+  const [tulot, setTulot] = useState([]);
   // WIP: sums to table
   const [totalResult, setTotalResult] = useState(0);
   // WIP: pagination
@@ -14,8 +14,27 @@ function Tulot() {
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
-    setTiedot(response.results);
-    console.log(response.results);
+    setTulot(response.results);
+
+    if (response.next) {
+      setNextURL(response.next);
+    } else {
+      setNextURL(null);
+    }
+
+    if (response.previous) {
+      setPrevURL(response.previous);
+    } else {
+      setPrevURL(null);
+    }
+  };
+
+  const paginationHandler = async (url) => {
+    let response = await (await fetch(url)).json();
+
+    setNextURL(response.next);
+    setPrevURL(response.previous);
+    setTulot(response.results);
   };
 
   useEffect(() => {
@@ -40,7 +59,7 @@ function Tulot() {
                   </tr>
                 </thead>
                 <tbody className="table-striped">
-                  {tiedot.map((item) => {
+                  {tulot.map((item) => {
                     return (
                       <tr key={item.id}>
                         <td>{item.maksaja.nimi}</td>
@@ -57,35 +76,46 @@ function Tulot() {
         </div>
       </div>
       {/* WIP: pagination */}
-      {/* <nav aria-label="Page navigation">
-        <ul className="pagination">
-          <li className="page-item">
-            <a className="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              1
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              2
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              3
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
+      {/* Pagination start */}
+      <nav>
+        <ul className="pagination justify-content-center">
+          {!prevURL && (
+            <li className="page-item">
+              <button className="page-link disabled">
+                <i className="fa-solid fa-angles-left"></i> Edellinen
+              </button>
+            </li>
+          )}
+          {prevURL && (
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={() => paginationHandler(prevURL)}
+              >
+                <i className="fa-solid fa-angles-left"></i> Edellinen
+              </button>
+            </li>
+          )}
+          {!nextURL && (
+            <li className="page-item">
+              <button className="page-link disabled">
+                <i className="fa-solid fa-angles-right"></i> Seuraava
+              </button>
+            </li>
+          )}
+          {nextURL && (
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={() => paginationHandler(nextURL)}
+              >
+                Seuraava <i className="fa-solid fa-angles-right"></i>
+              </button>
+            </li>
+          )}
         </ul>
-      </nav> */}
+      </nav>
+      {/* Pagination end */}
     </section>
   );
 }
