@@ -7,15 +7,25 @@ function MenoLuokat() {
   const baseURL = "http://127.0.0.1:8000/api";
   const link = `${baseURL}/menotluokittain/`;
   const [tiedot, setTiedot] = useState([]);
+  const [year, setYear] = useState();
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
     setTiedot(response.results);
   };
 
+  const getYear = () => {
+    const obj = tiedot[0];
+    setYear(Object.values(obj || {})[1]);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    getYear();
+  }, [tiedot]);
 
   let data_1 = [];
   let data_2 = [];
@@ -73,7 +83,7 @@ function MenoLuokat() {
     <section className="container mt-4">
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
-          <h4>Menot luokittain</h4>
+          <h4>Menot luokittain {year}</h4>
           <br />
           <Pie data={data} height={100} />
         </div>

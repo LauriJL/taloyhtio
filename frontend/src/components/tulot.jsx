@@ -7,7 +7,7 @@ function Tulot() {
   const link = `${baseURL}/tulot/`;
   const [tulot, setTulot] = useState([]);
   // WIP: sums to table
-  const [totalResult, setTotalResult] = useState(0);
+  //const [totalResult, setTotalResult] = useState(0);
   // WIP: pagination
   const [nextURL, setNextURL] = useState();
   const [prevURL, setPrevURL] = useState();
