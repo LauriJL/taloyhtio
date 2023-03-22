@@ -1,5 +1,6 @@
 # Packages
 from rest_framework import viewsets, generics
+from rest_framework.pagination import PageNumberPagination
 from django.http import JsonResponse
 from itertools import chain
 from django.shortcuts import render
@@ -15,12 +16,20 @@ from django.core.paginator import Paginator
 # Globals
 currentYear = int(datetime.date.today().year)
 
+# Pagination
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10
+
 # Menot
 
 
 class MenotViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MenotSerializer
-    pagination_class = CustomPageNumberPagination
+    pagination_class = StandardResultsSetPagination
     queryset = models.Menot.objects.all()
 
 
@@ -86,11 +95,12 @@ class MenotLuokittainViewSet(viewsets.ModelViewSet):
             'data': data
         })
 
-
 # Tulot
+
+
 class TulotViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.TulotSerializer
-    pagination_class = CustomPageNumberPagination
+    pagination_class = StandardResultsSetPagination
     queryset = models.Tulot.objects.all()
 
 
