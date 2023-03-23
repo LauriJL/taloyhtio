@@ -36,6 +36,15 @@ function NavBar() {
                 <NavDropdown.Item href="/menoluokat">
                   Menot luokittain
                 </NavDropdown.Item>
+                <NavDropdown.Item href="/menot_arkisto">
+                  Arkisto
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Tulot">
+                <NavDropdown.Item href="/tulot">Tulot</NavDropdown.Item>
+                <NavDropdown.Item href="/menot_arkisto">
+                  Arkisto
+                </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href="/tulot">Tulot</Nav.Link>
               <NavDropdown

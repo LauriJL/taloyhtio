@@ -30,7 +30,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 class MenotViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MenotSerializer
     pagination_class = StandardResultsSetPagination
-    queryset = models.Menot.objects.all()
+    queryset = models.Menot.objects.all().order_by('-maksupvm')
 
 
 class MenotDetail(generics.RetrieveUpdateDestroyAPIView):

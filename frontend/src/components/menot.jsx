@@ -8,17 +8,21 @@ function Menot() {
   const link = `${baseURL}`;
 
   const [menot, setMenot] = useState([]);
-  // WIP: sums to table
-  //const [totalResult, setTotalResult] = useState(0);
-  // WIP: pagination
   const [nextURL, setNextURL] = useState();
   const [prevURL, setPrevURL] = useState();
+  const [year, setYear] = useState();
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
-
-    setMenot(response.results);
-
+    // Rebder only bills paid during current year.
+    // I need to hack this here in frontend as year is an automatically generated value in db.
+    // Have not (yet) been able to figure out how to get around this in backend/Django models&views.
+    // NOTE: This means that Django pagination cannot be used
+    // So I need to create a custom pagination component.
+    setMenot(response.results.filter((o) => o.maksupvm.includes(currentYear)));
+    setYear(currentYear);
     if (response.next) {
       setNextURL(response.next);
     } else {
@@ -34,10 +38,9 @@ function Menot() {
 
   const paginationHandler = async (url) => {
     let response = await (await fetch(url)).json();
-
     setNextURL(response.next);
     setPrevURL(response.previous);
-    setMenot(response.results);
+    setMenot(response.results.filter((o) => o.maksupvm.includes("2023")));
   };
 
   useEffect(() => {
@@ -48,7 +51,7 @@ function Menot() {
     <section className="container mt-4">
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
-          <h4>Laskut</h4>
+          <h4>Laskut ({year})</h4>
           <br />
           <div className="row">
             <div className="table-responsive">
