@@ -15,6 +15,8 @@ from django.core.paginator import Paginator
 
 # Globals
 currentYear = int(datetime.date.today().year)
+date_range_start = "{}-01-01".format(currentYear)
+date_range_end = "{}-12-31".format(currentYear)
 
 # Pagination
 
@@ -30,7 +32,15 @@ class StandardResultsSetPagination(PageNumberPagination):
 class MenotViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MenotSerializer
     pagination_class = StandardResultsSetPagination
-    queryset = models.Menot.objects.all().order_by('-maksupvm')
+    queryset = models.Menot.objects.all().filter(
+        maksupvm__range=[date_range_start, date_range_end]).order_by('-maksupvm')
+
+
+class MenotArchiveViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.MenotSerializer
+    pagination_class = StandardResultsSetPagination
+    queryset = models.Menot.objects.all().exclude(
+        maksupvm__range=[date_range_start, date_range_end]).order_by('-maksupvm')
 
 
 class MenotDetail(generics.RetrieveUpdateDestroyAPIView):

@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function MenotArkisto() {
-  const baseURL = "http://127.0.0.1:8000/api/menot/";
+  const baseURL = "http://127.0.0.1:8000/api/menotarkisto/";
   const link = `${baseURL}`;
 
   const [menot, setMenot] = useState([]);
@@ -46,7 +46,7 @@ function MenotArkisto() {
     <section className="container mt-4">
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
-          <h4>Laskut (kaikki)</h4>
+          <h4>Laskut (edelliset vuodet)</h4>
           <br />
           <div className="row">
             <div className="table-responsive">

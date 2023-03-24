@@ -16,13 +16,10 @@ function Menot() {
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
-    // Rebder only bills paid during current year.
-    // I need to hack this here in frontend as year is an automatically generated value in db.
-    // Have not (yet) been able to figure out how to get around this in backend/Django models&views.
-    // NOTE: This means that Django pagination cannot be used
-    // So I need to create a custom pagination component.
-    setMenot(response.results.filter((o) => o.maksupvm.includes(currentYear)));
+
+    setMenot(response.results);
     setYear(currentYear);
+
     if (response.next) {
       setNextURL(response.next);
     } else {
@@ -38,9 +35,10 @@ function Menot() {
 
   const paginationHandler = async (url) => {
     let response = await (await fetch(url)).json();
+
     setNextURL(response.next);
     setPrevURL(response.previous);
-    setMenot(response.results.filter((o) => o.maksupvm.includes("2023")));
+    setMenot(response.results);
   };
 
   useEffect(() => {
