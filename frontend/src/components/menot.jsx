@@ -8,9 +8,8 @@ function Menot() {
   const link = `${baseURL}`;
 
   const [menot, setMenot] = useState([]);
-  // WIP: sums to table
-  const [totalResult, setTotalResult] = useState(0);
-  // WIP: pagination
+
+  const [totalPages, setTotalPages] = useState(0);
   const [nextURL, setNextURL] = useState();
   const [prevURL, setPrevURL] = useState();
 
@@ -18,13 +17,16 @@ function Menot() {
     let response = await (await fetch(link)).json();
 
     setMenot(response.results);
+    // Page count
+    setTotalPages(Math.ceil(response.count / 10));
 
+    // URL for next page
     if (response.next) {
       setNextURL(response.next);
     } else {
       setNextURL(null);
     }
-
+    // URL for previous page
     if (response.previous) {
       setPrevURL(response.previous);
     } else {
@@ -34,11 +36,25 @@ function Menot() {
 
   const paginationHandler = async (url) => {
     let response = await (await fetch(url)).json();
-
     setNextURL(response.next);
     setPrevURL(response.previous);
     setMenot(response.results);
   };
+
+  // Pagination links
+  const links = [];
+  for (let i = 1; i <= totalPages; i++) {
+    links.push(
+      <li className="page-item">
+        <Link
+          onClick={() => paginationHandler(baseURL + `?page=${i}`)}
+          className="page-link"
+        >
+          {i}
+        </Link>
+      </li>
+    );
+  }
 
   useEffect(() => {
     fetchData();
@@ -94,7 +110,7 @@ function Menot() {
               </table>
             </div>
             {/* Pagination start */}
-            <nav>
+            <nav aria-label="Page navigation example">
               <ul className="pagination justify-content-center">
                 {!prevURL && (
                   <li className="page-item">
@@ -113,6 +129,7 @@ function Menot() {
                     </button>
                   </li>
                 )}
+                {links}
                 {!nextURL && (
                   <li className="page-item">
                     <button className="page-link disabled">
