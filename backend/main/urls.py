@@ -16,7 +16,8 @@ router.register('maksajat', views.MaksajatViewSet)
 router.register('tuloluokat', views.TuloluokatViewSet)
 # Summat
 router.register('summat', views.SummatViewSet)
-
+# Vuodet
+router.register('vuodet', views.VuosiViewSet)
 
 urlpatterns = [
     path('menot/<int:pk>/', views.MenotDetail.as_view()),

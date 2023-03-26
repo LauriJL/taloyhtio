@@ -105,6 +105,12 @@ class MenotLuokittainViewSet(viewsets.ModelViewSet):
             'data': data
         })
 
+
+class VuosiViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.VuosiSerializer
+    queryset = models.Summat.objects.all().distinct(
+        'vuosi')
+
 # Tulot
 
 
