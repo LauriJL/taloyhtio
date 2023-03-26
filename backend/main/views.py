@@ -36,11 +36,14 @@ class MenotViewSet(viewsets.ModelViewSet):
         maksupvm__range=[date_range_start, date_range_end]).order_by('-maksupvm')
 
 
-class MenotArchiveViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.MenotSerializer
+class MenotArchiveViewSet(generics.ListAPIView):
+    serializer_class = serializers.MenotArkistoSerializer
     pagination_class = StandardResultsSetPagination
-    queryset = models.Menot.objects.all().exclude(
-        maksupvm__range=[date_range_start, date_range_end]).order_by('-maksupvm')
+
+    def get_queryset(self):
+        vuosi = self.kwargs['yr']
+        print(vuosi)
+        return models.Menot.objects.filter(vuosi=vuosi)
 
 
 class MenotDetail(generics.RetrieveUpdateDestroyAPIView):

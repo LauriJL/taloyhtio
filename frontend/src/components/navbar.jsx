@@ -68,7 +68,9 @@ function NavBar() {
               </NavDropdown>
               <NavDropdown title="Arkisto">
                 {yr.map((item) => (
-                  <NavDropdown.Item href="#">{item}</NavDropdown.Item>
+                  <NavDropdown.Item href="/menot_arkisto/">
+                    {item}
+                  </NavDropdown.Item>
                 ))}
               </NavDropdown>
               <NavDropdown

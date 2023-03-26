@@ -24,7 +24,7 @@ function App() {
           <Route path="/menot" element={<Menot />} />
           <Route exact path="/menot/:id" element={<LaskunTiedot />} />
           <Route path="/menoluokat" element={<MenoLuokat />} />
-          <Route path="/menot_arkisto" element={<MenotArkisto />} />
+          <Route exact path="/menot_arkisto/:yr" element={<MenotArkisto />} />
           <Route path="/tulot" element={<Tulot />} />
         </Routes>
         <Footer />

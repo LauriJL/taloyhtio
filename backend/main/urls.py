@@ -5,7 +5,7 @@ from . import views
 router = routers.DefaultRouter()
 # Menot
 router.register('menot', views.MenotViewSet)
-router.register('menotarkisto', views.MenotArchiveViewSet)
+#router.register('menotarkisto', views.MenotArchiveViewSet)
 router.register('saajat', views.SaajatViewSet)
 router.register('menolajit', views.MenolajitViewSet)
 router.register('menoluokat', views.MenoluokatViewSet)
@@ -22,6 +22,8 @@ router.register('vuodet', views.VuosiViewSet)
 urlpatterns = [
     path('menot/<int:pk>/', views.MenotDetail.as_view()),
     path('erittely/<int:pk>/', views.MenoErittelyDetail.as_view()),
+    path('menotarkisto/<int:yr>/',
+         views.MenotArchiveViewSet.as_view())
 ]
 
 urlpatterns += router.urls
