@@ -10,8 +10,8 @@ import { faUser } from "@fortawesome/fontawesome-free-regular";
 function NavBar() {
   const baseURL = "http://127.0.0.1:8000/api/vuodet/";
   const link = `${baseURL}`;
-
   const [yr, setYr] = useState([]);
+  const archiveURL = "http://localhost:3000/menot_arkisto/";
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
@@ -68,7 +68,11 @@ function NavBar() {
               </NavDropdown>
               <NavDropdown title="Arkisto">
                 {yr.map((item) => (
-                  <NavDropdown.Item href="/menot_arkisto/">
+                  <NavDropdown.Item
+                    href={
+                      archiveURL + `${item}` + `-01-01&` + `${item}` + `-12-31`
+                    }
+                  >
                     {item}
                   </NavDropdown.Item>
                 ))}

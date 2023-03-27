@@ -41,9 +41,13 @@ class MenotArchiveViewSet(generics.ListAPIView):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        vuosi = self.kwargs['yr']
-        print(vuosi)
-        return models.Menot.objects.filter(vuosi=vuosi)
+        # vuosi = self.kwargs['yr']
+        start_date = self.kwargs['start_date']
+        end_date = self.kwargs['end_date']
+        print("start: ", str(start_date.date()))
+        print("end: ", str(end_date.date()))
+        return models.Menot.objects.filter(
+            maksupvm__range=[str(start_date.date()), str(end_date.date())]).order_by('-maksupvm')
 
 
 class MenotDetail(generics.RetrieveUpdateDestroyAPIView):
