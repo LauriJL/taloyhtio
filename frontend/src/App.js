@@ -9,6 +9,7 @@ import Saldo from "./components/home";
 import Menot from "./components/menot";
 import MenoLuokat from "./components/menoluokat";
 import LaskunTiedot from "./components/laskuntiedot";
+import MenotArkisto from "./components/menot_arkisto";
 import Tulot from "./components/tulot";
 import NavBar from "./components/navbar";
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/menot" element={<Menot />} />
           <Route exact path="/menot/:id" element={<LaskunTiedot />} />
           <Route path="/menoluokat" element={<MenoLuokat />} />
+          <Route exact path="/menot_arkisto/:yr" element={<MenotArkisto />} />
           <Route path="/tulot" element={<Tulot />} />
         </Routes>
         <Footer />

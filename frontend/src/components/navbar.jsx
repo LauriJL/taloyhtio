@@ -3,10 +3,30 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import React from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/fontawesome-free-regular";
 
 function NavBar() {
+  const baseURL = "http://127.0.0.1:8000/api/vuodet/";
+  const link = `${baseURL}`;
+  const [yr, setYr] = useState([]);
+  const archiveURL = "http://localhost:3000/menot_arkisto/";
+
+  const fetchData = async () => {
+    let response = await (await fetch(link)).json();
+    let yrs = [];
+    response.results.forEach((element) => {
+      yrs.push(element.vuosi);
+    });
+    yrs.pop();
+    setYr(yrs);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <style type="text/css">
@@ -36,8 +56,27 @@ function NavBar() {
                 <NavDropdown.Item href="/menoluokat">
                   Menot luokittain
                 </NavDropdown.Item>
+                <NavDropdown.Item href="/menot_arkisto">
+                  Arkisto
+                </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="/tulot">Tulot</Nav.Link>
+              <NavDropdown title="Tulot">
+                <NavDropdown.Item href="/tulot">Tulot</NavDropdown.Item>
+                <NavDropdown.Item href="/menot_arkisto">
+                  Arkisto
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Arkisto">
+                {yr.map((item) => (
+                  <NavDropdown.Item
+                    href={
+                      archiveURL + `${item}` + `-01-01&` + `${item}` + `-12-31`
+                    }
+                  >
+                    {item}
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
               <NavDropdown
                 title={
                   <span>

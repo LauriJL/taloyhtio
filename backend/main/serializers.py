@@ -30,6 +30,16 @@ class MenotLuokittainSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class VuosiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Summat
+        fields = ['vuosi']
+
+    def __init__(self, *args, **kwargs):
+        super(VuosiSerializer, self).__init__(*args, **kwargs)
+        self.Meta.depth = 1
+
+
 class SaajatSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Saajat
@@ -47,6 +57,15 @@ class MenoluokatSerializer(serializers.ModelSerializer):
         model = models.Menoluokat
         fields = '__all__'
 
+
+class MenotArkistoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Menot
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(MenotArkistoSerializer, self).__init__(*args, **kwargs)
+        self.Meta.depth = 1
 # Tulot
 
 
