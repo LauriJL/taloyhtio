@@ -15,6 +15,8 @@ from django.core.paginator import Paginator
 
 # Globals
 currentYear = int(datetime.date.today().year)
+date_range_start = "{}-01-01".format(currentYear)
+date_range_end = "{}-12-31".format(currentYear)
 
 # Pagination
 
@@ -30,7 +32,19 @@ class StandardResultsSetPagination(PageNumberPagination):
 class MenotViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MenotSerializer
     pagination_class = StandardResultsSetPagination
-    queryset = models.Menot.objects.all()
+    queryset = models.Menot.objects.all().filter(
+        maksupvm__range=[date_range_start, date_range_end]).order_by('-maksupvm')
+
+
+class MenotArchiveViewSet(generics.ListAPIView):
+    serializer_class = serializers.MenotArkistoSerializer
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        start_date = self.kwargs['start_date']
+        end_date = self.kwargs['end_date']
+        return models.Menot.objects.filter(
+            maksupvm__range=[str(start_date.date()), str(end_date.date())]).order_by('-maksupvm')
 
 
 class MenotDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -94,6 +108,13 @@ class MenotLuokittainViewSet(viewsets.ModelViewSet):
             'labels': labels,
             'data': data
         })
+
+
+class VuosiViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.VuosiSerializer
+    queryset = models.Summat.objects.all().distinct(
+        'vuosi')
+
 
 # Tulot
 

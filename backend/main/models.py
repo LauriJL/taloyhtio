@@ -41,7 +41,7 @@ class Menot(models.Model):
     erittely = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.saaja} ({self.maksupvm})'
+        return f'{self.saaja}'
 
     class Meta:
         db_table = 'menot'

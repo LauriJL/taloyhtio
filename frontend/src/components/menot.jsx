@@ -11,11 +11,15 @@ function Menot() {
   const [totalPages, setTotalPages] = useState(0);
   const [nextURL, setNextURL] = useState();
   const [prevURL, setPrevURL] = useState();
+  const [year, setYear] = useState();
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
 
     setMenot(response.results);
+    setYear(currentYear);
     // Page count
     setTotalPages(Math.ceil(response.count / 10));
     // URL for next page
@@ -62,7 +66,7 @@ function Menot() {
     <section className="container mt-4">
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
-          <h4>Laskut</h4>
+          <h4>Laskut ({year})</h4>
           <br />
           <div className="row">
             <div className="table-responsive">
