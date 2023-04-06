@@ -2,6 +2,10 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { Pie } from "react-chartjs-2";
+import Alert from "react-bootstrap/Alert";
+
+// Assets
+import Year from "./year";
 
 function MenoLuokat() {
   const baseURL = "http://127.0.0.1:8000/api";
@@ -75,7 +79,10 @@ function MenoLuokat() {
 
   return (
     <section className="container mt-4">
-      <h3>{year}</h3>
+      <Year key={year} year={year} />
+      <Alert variant={"warning"} className="alert-title">
+        Menot luokittain
+      </Alert>
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
           <h4>Menot luokittain</h4>

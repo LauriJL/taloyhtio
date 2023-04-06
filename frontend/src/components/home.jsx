@@ -7,11 +7,9 @@ import React from "react";
 import TulotCard from "./tulot_card";
 import MenotCard from "./menot_card";
 import TaseCard from "./tase_card";
+import Year from "./year";
 
 const baseURL = "http://127.0.0.1:8000/api";
-// const [year, setYear] = useState();
-const currentDate = new Date();
-const currentYear = currentDate.getFullYear();
 
 function Saldo() {
   const [year, setYear] = useState();
@@ -32,7 +30,7 @@ function Saldo() {
 
   return (
     <section className="container mt-4">
-      <h3>{year}</h3>
+      <Year key={year} year={year} />
       <div className="row">
         <div className="col-md-12 col-12 mb-2">
           <div className="row">

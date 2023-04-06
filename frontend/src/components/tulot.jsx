@@ -2,6 +2,10 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
+
+// Assets
+import Year from "./year";
 
 function Tulot() {
   const baseURL = "http://127.0.0.1:8000/api/tulot/";
@@ -63,11 +67,12 @@ function Tulot() {
 
   return (
     <section className="container mt-4">
-      <h3>{year}</h3>
+      <Year key={year} year={year} />
+      <Alert variant={"warning"} className="alert-title">
+        Tulot
+      </Alert>
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
-          <h4>Tulot</h4>
-          <br />
           <div className="row">
             <div className="table-responsive">
               <table className="table">

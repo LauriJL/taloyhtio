@@ -2,6 +2,10 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
+
+// Assets
+import Year from "./year";
 
 function Menot() {
   const baseURL = "http://127.0.0.1:8000/api/menot/";
@@ -21,7 +25,7 @@ function Menot() {
     setMenot(response.results);
     setYear(currentYear);
     // Page count
-    setTotalPages(Math.ceil(response.count / 10));
+    setTotalPages(Math.ceil(response.count / 8));
     // URL for next page
     if (response.next) {
       setNextURL(response.next);
@@ -64,11 +68,12 @@ function Menot() {
 
   return (
     <section className="container mt-4">
-      <h3>{year}</h3>
+      <Year key={year} year={year} />
+      <Alert variant={"warning"} className="alert-title">
+        Laskut
+      </Alert>
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
-          <h4>Laskut</h4>
-          <br />
           <div className="row">
             <div className="table-responsive">
               <table className="table">

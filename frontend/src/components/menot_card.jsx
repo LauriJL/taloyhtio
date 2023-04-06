@@ -2,7 +2,7 @@
 import React from "react";
 
 function MenotCard(props) {
-  console.log(props);
+  //console.log(props);
 
   return (
     <div className="col-12 col-md-12 mb-4">
