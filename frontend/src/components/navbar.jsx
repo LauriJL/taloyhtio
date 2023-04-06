@@ -11,7 +11,7 @@ function NavBar() {
   const baseURL = "http://127.0.0.1:8000/api/vuodet/";
   const link = `${baseURL}`;
   const [yr, setYr] = useState([]);
-  const archiveURL = "http://localhost:3000/menot_arkisto/";
+  const archiveURL = "http://localhost:3000/menot_arkisto_tst/";
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
@@ -62,7 +62,8 @@ function NavBar() {
                 {yr.map((item) => (
                   <NavDropdown.Item
                     href={
-                      archiveURL + `${item}` + `-01-01&` + `${item}` + `-12-31`
+                      // archiveURL + `${item}` + `-01-01&` + `${item}` + `-12-31`
+                      archiveURL + `${item}`
                     }
                   >
                     {item}

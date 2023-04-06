@@ -7,6 +7,9 @@ function Tulot() {
   const baseURL = "http://127.0.0.1:8000/api/tulot/";
   const link = `${baseURL}`;
   const [tulot, setTulot] = useState([]);
+  const [year, setYear] = useState();
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
   const [totalPages, setTotalPages] = useState(0);
   const [nextURL, setNextURL] = useState();
   const [prevURL, setPrevURL] = useState();
@@ -14,6 +17,7 @@ function Tulot() {
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
     setTulot(response.results);
+    setYear(currentYear);
 
     // Page count
     setTotalPages(Math.ceil(response.count / 10));
@@ -59,6 +63,7 @@ function Tulot() {
 
   return (
     <section className="container mt-4">
+      <h3>{year}</h3>
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
           <h4>Tulot</h4>

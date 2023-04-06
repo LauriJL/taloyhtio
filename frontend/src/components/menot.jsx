@@ -64,9 +64,10 @@ function Menot() {
 
   return (
     <section className="container mt-4">
+      <h3>{year}</h3>
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
-          <h4>Laskut ({year})</h4>
+          <h4>Laskut</h4>
           <br />
           <div className="row">
             <div className="table-responsive">

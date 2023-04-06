@@ -58,14 +58,14 @@ class MenoluokatSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class MenotArkistoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Menot
-        fields = '__all__'
+# class MenotArkistoSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = models.Menot
+#         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(MenotArkistoSerializer, self).__init__(*args, **kwargs)
-        self.Meta.depth = 1
+#     def __init__(self, *args, **kwargs):
+#         super(MenotArkistoSerializer, self).__init__(*args, **kwargs)
+#         self.Meta.depth = 1
 
 # Tulot
 

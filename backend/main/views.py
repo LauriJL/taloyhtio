@@ -36,17 +36,6 @@ class MenotViewSet(viewsets.ModelViewSet):
         maksupvm__range=[date_range_start, date_range_end]).order_by('-maksupvm')
 
 
-class MenotArchiveViewSet(generics.ListAPIView):
-    serializer_class = serializers.MenotArkistoSerializer
-    pagination_class = StandardResultsSetPagination
-
-    def get_queryset(self):
-        start_date = self.kwargs['start_date']
-        end_date = self.kwargs['end_date']
-        return models.Menot.objects.filter(
-            maksupvm__range=[str(start_date.date()), str(end_date.date())]).order_by('-maksupvm')
-
-
 class MenotDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.MenotSerializer
     queryset = models.Menot.objects.all()
@@ -122,7 +111,8 @@ class VuosiViewSet(viewsets.ModelViewSet):
 class TulotViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.TulotSerializer
     pagination_class = StandardResultsSetPagination
-    queryset = models.Tulot.objects.all()
+    queryset = models.Tulot.objects.all().filter(
+        maksupvm__range=[date_range_start, date_range_end]).order_by('-maksupvm')
 
 
 class MaksajatViewSet(viewsets.ModelViewSet):
@@ -139,3 +129,61 @@ class TuloluokatViewSet(viewsets.ModelViewSet):
 class SummatViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.SummatSerializer
     queryset = models.Summat.objects.all().filter(vuosi=currentYear)
+
+# Archives
+
+
+class MenotArchiveViewSet(generics.ListAPIView):
+    serializer_class = serializers.MenotSerializer
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        start_date = self.kwargs['start_date']
+        end_date = self.kwargs['end_date']
+        return models.Menot.objects.filter(
+            maksupvm__range=[str(start_date.date()), str(end_date.date())]).order_by('-maksupvm')
+
+
+class TulotArchiveViewSet(generics.ListAPIView):
+    serializer_class = serializers.TulotSerializer
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        start_date = self.kwargs['start_date']
+        end_date = self.kwargs['end_date']
+        return models.Tulot.objects.filter(
+            maksupvm__range=[str(start_date.date()), str(end_date.date())]).order_by('-maksupvm')
+
+
+class SummatArchiveViewSet(generics.ListAPIView):
+    serializer_class = serializers.SummatSerializer
+
+    def get_queryset(self):
+        year = self.kwargs['year']
+        return models.Summat.objects.filter(vuosi=year)
+
+
+class MenotLuokittainArchiveViewSet(generics.ListAPIView):
+    serializer_class = serializers.MenotLuokittainSerializer
+    # queryset = models.MenotLuokittain.objects.all().filter(vuosi=2022)
+
+    def get_queryset(self):
+        year = self.kwargs['year']
+        return models.MenotLuokittain.objects.filter(vuosi=year)
+
+    def menotLuokittain_Chart(request):
+        labels = []
+        data = []
+        vuosi = []
+        queryset = models.MenotLuokittain.objects.all()
+
+        for item in queryset:
+            vuosi.append(['vuosi'])
+            labels.append(item['luokka'])
+            data.append(item['summa'])
+
+        return JsonResponse(data={
+            'vuodet': vuosi,
+            'labels': labels,
+            'data': data
+        })

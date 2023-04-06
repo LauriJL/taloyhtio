@@ -9,25 +9,30 @@ import MenotCard from "./menot_card";
 import TaseCard from "./tase_card";
 
 const baseURL = "http://127.0.0.1:8000/api";
+// const [year, setYear] = useState();
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
 
 function Saldo() {
-  //const { id } = useParams();
+  const [year, setYear] = useState();
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
   const link = `${baseURL}/summat/`;
   const [tulotmenot, setTulotmenot] = useState([]);
 
   const fetchData = async () => {
     let response = await (await fetch(link)).json();
     setTulotmenot(response.results);
-    console.log("response: ", response);
+    setYear(currentYear);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-  //console.log("tulotmenot: ", tulotmenot);
 
   return (
     <section className="container mt-4">
+      <h3>{year}</h3>
       <div className="row">
         <div className="col-md-12 col-12 mb-2">
           <div className="row">

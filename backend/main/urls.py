@@ -37,8 +37,13 @@ urlpatterns = [
     path('menot/<int:pk>/', views.MenotDetail.as_view()),
     path('erittely/<int:pk>/', views.MenoErittelyDetail.as_view()),
     path('menotarkisto/<date_C:start_date>&<date_C:end_date>',
-         views.MenotArchiveViewSet.as_view())
-
+         views.MenotArchiveViewSet.as_view()),
+    path('summatarkisto/<int:year>',
+         views.SummatArchiveViewSet.as_view()),
+    path('tulotarkisto/<date_C:start_date>&<date_C:end_date>',
+         views.TulotArchiveViewSet.as_view()),
+    path('menotluokittainarkisto/<int:year>',
+         views.MenotLuokittainArchiveViewSet.as_view()),
 ]
 
 urlpatterns += router.urls
