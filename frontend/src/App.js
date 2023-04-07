@@ -13,6 +13,8 @@ import MenoLuokat from "./components/menoluokat";
 import LaskunTiedot from "./components/laskuntiedot";
 import Tulot from "./components/tulot";
 import NavBar from "./components/navbar";
+import TulotModule from "./components/tulot_module";
+import MenotModule from "./components/menot_module";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route exact path="/menot/:id" element={<LaskunTiedot />} />
           <Route path="/menoluokat" element={<MenoLuokat />} />
           <Route path="/tulot" element={<Tulot />} />
+          <Route path="/tulot_module" element={<TulotModule />} />
+          <Route path="/menot_module" element={<MenotModule />} />
         </Routes>
         <Footer />
       </div>

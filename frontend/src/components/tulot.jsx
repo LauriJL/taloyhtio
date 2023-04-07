@@ -6,6 +6,7 @@ import Alert from "react-bootstrap/Alert";
 
 // Assets
 import Year from "./year";
+import TulotModule from "./tulot_module";
 
 function Tulot() {
   const baseURL = "http://127.0.0.1:8000/api/tulot/";
@@ -74,31 +75,7 @@ function Tulot() {
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
           <div className="row">
-            <div className="table-responsive">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Maksaja</th>
-                    <th>Summa</th>
-                    <th>Maksupvm</th>
-                    <th>Luokka</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tulot &&
-                    tulot.map((item) => {
-                      return (
-                        <tr key={item.id}>
-                          <td>{item.maksaja.nimi}</td>
-                          <td>{item.summa}</td>
-                          <td>{item.maksupvm}</td>
-                          <td>{item.luokka.tuloluokka}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
+            <TulotModule key={tulot.id} tulotmenot={tulot} />
           </div>
         </div>
       </div>

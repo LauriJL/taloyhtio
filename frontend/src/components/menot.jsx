@@ -6,6 +6,7 @@ import Alert from "react-bootstrap/Alert";
 
 // Assets
 import Year from "./year";
+import MenotModule from "./menot_module";
 
 function Menot() {
   const baseURL = "http://127.0.0.1:8000/api/menot/";
@@ -75,7 +76,8 @@ function Menot() {
       <div className="row">
         <div className="col-md-12 col-12 mb-2 text-start">
           <div className="row">
-            <div className="table-responsive">
+            <MenotModule key={menot.id} tulotmenot={menot} />
+            {/* <div className="table-responsive">
               <table className="table">
                 <thead>
                   <tr>
@@ -116,7 +118,7 @@ function Menot() {
                   })}
                 </tbody>
               </table>
-            </div>
+            </div> */}
             {/* Pagination start */}
             <nav>
               <ul className="pagination justify-content-center">

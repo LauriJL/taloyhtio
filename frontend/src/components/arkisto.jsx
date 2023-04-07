@@ -12,6 +12,8 @@ import { useParams } from "react-router-dom";
 import TulotCard from "./tulot_card";
 import MenotCard from "./menot_card";
 import TaseCard from "./tase_card";
+import TulotModule from "./tulot_module";
+import MenotModule from "./menot_module";
 import Year from "./year";
 
 function MenotArkistoTst() {
@@ -219,50 +221,7 @@ function MenotArkistoTst() {
                   <div className="col-md-12 col-12 mb-2 text-start">
                     <br />
                     <div className="row">
-                      <div className="table-responsive">
-                        <table className="table">
-                          <thead>
-                            <tr>
-                              <th>Saaja</th>
-                              <th>Summa</th>
-                              <th>Maksupvm</th>
-                              <th>Luokka</th>
-                              <th></th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {menot.map((menot) => {
-                              return (
-                                <tr key={menot.id}>
-                                  <td>{menot.saaja.nimi}</td>
-                                  <td>{menot.summa}</td>
-                                  <td>{menot.maksupvm}</td>
-                                  <td>{menot.luokka.menoluokka}</td>
-                                  <td>
-                                    <Link
-                                      to={`${menot.id}`}
-                                      className="btn btn-outline-success btn-sm"
-                                    >
-                                      <i className="fa-regular fa-eye"></i>{" "}
-                                      Tiedot
-                                    </Link>
-                                  </td>
-                                  <td>
-                                    <Link
-                                      to="/menoluokat"
-                                      className="btn btn-outline-primary btn-sm"
-                                    >
-                                      <i className="fa-solid fa-chart-pie"></i>{" "}
-                                      Luokat
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
+                      <MenotModule key={menot.id} tulotmenot={menot} />
                       {/* Pagination start */}
                       <nav>
                         <ul className="pagination justify-content-center">
@@ -323,36 +282,7 @@ function MenotArkistoTst() {
             <Tab eventKey={4} title="Tulot">
               <section className="container mt-4">
                 <div className="row">
-                  <div className="col-md-12 col-12 mb-2 text-start">
-                    <br />
-                    <div className="row">
-                      <div className="table-responsive">
-                        <table className="table">
-                          <thead>
-                            <tr>
-                              <th>Maksaja</th>
-                              <th>Summa</th>
-                              <th>Maksupvm</th>
-                              <th>Luokka</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {tulot &&
-                              tulot.map((item) => {
-                                return (
-                                  <tr key={item.id}>
-                                    <td>{item.maksaja.nimi}</td>
-                                    <td>{item.summa}</td>
-                                    <td>{item.maksupvm}</td>
-                                    <td>{item.luokka.tuloluokka}</td>
-                                  </tr>
-                                );
-                              })}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                  <TulotModule key={tulot.id} tulotmenot={tulot} />
                 </div>
                 {/* Pagination start */}
                 <nav>
