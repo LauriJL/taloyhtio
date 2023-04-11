@@ -6,18 +6,17 @@ import { Pie } from "react-chartjs-2";
 // Assets
 import Year from "./year";
 
-function MenoLuokat() {
-  const baseURL = "http://127.0.0.1:8000/api";
-  const link = `${baseURL}/menotluokittain/`;
+function MenoLuokatArkisto(props) {
+  const year = parseInt(props.yr);
+  const baseURL = "http://127.0.0.1:8000/api/menotluokittainarkisto";
+  const linkLuokat = `${baseURL}/${year}`;
   const [tiedot, setTiedot] = useState([]);
-  const [year, setYear] = useState();
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
   const fetchData = async () => {
-    let response = await (await fetch(link)).json();
+    let response = await (await fetch(linkLuokat)).json();
     setTiedot(response.results);
-    setYear(currentYear);
   };
 
   useEffect(() => {
@@ -88,4 +87,4 @@ function MenoLuokat() {
   );
 }
 
-export default MenoLuokat;
+export default MenoLuokatArkisto;

@@ -12,9 +12,7 @@ function TulotCard(props) {
         </div>
         <div className="card-body">
           {props.tulotmenot.map((tieto) => (
-            <>
-              <h5 key={tieto.id}>{tieto.tulot} €</h5>
-            </>
+            <h5 key={tieto.id}>{tieto.tulot} €</h5>
           ))}
         </div>
       </div>

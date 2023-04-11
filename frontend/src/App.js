@@ -7,8 +7,7 @@ import Footer from "./components/footer";
 import Home from "./components/home";
 import Saldo from "./components/home";
 import Menot from "./components/menot";
-import MenotArkisto from "./components/menot_arkisto";
-import MenotArkistoTst from "./components/arkisto";
+import Arkisto from "./components/arkisto";
 import MenoLuokat from "./components/menoluokat";
 import LaskunTiedot from "./components/laskuntiedot";
 import Tulot from "./components/tulot";
@@ -25,8 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/saldo" element={<Saldo />} />
           <Route path="/menot" element={<Menot />} />
-          <Route path="/menot_arkisto/:yr" element={<MenotArkisto />} />
-          <Route path="/arkisto/:yr" element={<MenotArkistoTst />} />
+          <Route path="/arkisto/:yr" element={<Arkisto />} />
           <Route exact path="/menot/:id" element={<LaskunTiedot />} />
           <Route path="/menoluokat" element={<MenoLuokat />} />
           <Route path="/tulot" element={<Tulot />} />

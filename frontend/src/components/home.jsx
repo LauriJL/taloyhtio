@@ -1,61 +1,110 @@
 // Packages
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import React from "react";
+
+// react-bootstrap
+import { Container, Row, Tabs, Tab } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./tabStyles.css";
 
 //Assets
 import TulotCard from "./tulot_card";
 import MenotCard from "./menot_card";
 import TaseCard from "./tase_card";
 import Year from "./year";
-
-const baseURL = "http://127.0.0.1:8000/api";
+import Menot from "./menot";
+import Tulot from "./tulot";
+import MenoLuokat from "./menoluokat";
 
 function Saldo() {
-  const [year, setYear] = useState();
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  const link = `${baseURL}/summat/`;
+
+  const [year, setYear] = useState();
   const [tulotmenot, setTulotmenot] = useState([]);
 
-  const fetchData = async () => {
-    let response = await (await fetch(link)).json();
+  // URLs
+  const baseURLSummat = "http://127.0.0.1:8000/api/summat";
+  const linkSummat = `${baseURLSummat}`;
+
+  // Fetch summat
+  const fetchSummat = async () => {
+    let response = await (await fetch(linkSummat)).json();
     setTulotmenot(response.results);
     setYear(currentYear);
   };
 
   useEffect(() => {
-    fetchData();
+    fetchSummat();
   }, []);
 
   return (
-    <section className="container mt-4">
-      <Year key={year} year={year} />
-      <div className="row">
-        <div className="col-md-12 col-12 mb-2">
-          <div className="row">
-            <div className="col-md-4 mb-2">
-              <Link to="/tulot" className="text-decoration-none text-dark">
-                <TulotCard key={tulotmenot.id} tulotmenot={tulotmenot} />
-              </Link>
-            </div>
-            <div className="col-md-4 mb-2">
-              <Link to="/menot" className="text-decoration-none text-dark">
-                <MenotCard key={tulotmenot.id} tulotmenot={tulotmenot} />
-              </Link>
-            </div>
-            <div className="col-md-4 mb-2">
-              <Link
-                to="#"
-                className="text-decoration-none text-dark hover-zoom"
-              >
-                <TaseCard key={tulotmenot.id} tulotmenot={tulotmenot} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Container className="py-4">
+      <Year key={currentYear} year={currentYear} />
+      <Container>
+        <Row className="justify-content-center">
+          <Tabs
+            justify
+            variant="pills"
+            defaultActiveKey={1}
+            className="mb-1 p-0"
+          >
+            <Tab eventKey={1} title="Saldo">
+              <section className="container mt-4">
+                <div className="row">
+                  <div className="col-md-12 col-12 mb-2">
+                    <div className="row">
+                      <div className="col-md-4 mb-2">
+                        <TulotCard
+                          key={tulotmenot.id}
+                          tulotmenot={tulotmenot}
+                        />
+                      </div>
+                      <div className="col-md-4 mb-2">
+                        <MenotCard
+                          key={tulotmenot.id}
+                          tulotmenot={tulotmenot}
+                        />
+                      </div>
+                      <div className="col-md-4 mb-2">
+                        <TaseCard key={tulotmenot.id} tulotmenot={tulotmenot} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </Tab>
+            <Tab eventKey={2} title="Menot">
+              <section className="container mt-4">
+                <div className="row">
+                  <div className="col-md-12 col-12 mb-2 text-start">
+                    <br />
+                    <div className="row">
+                      <Menot />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </Tab>
+            <Tab eventKey={3} title="Menot luokittain">
+              <div className="row">
+                <div className="col-md-12 col-12 mb-2 text-start">
+                  <br />
+                  <MenoLuokat />
+                </div>
+              </div>
+            </Tab>
+            <Tab eventKey={4} title="Tulot">
+              <section className="container mt-4">
+                <div className="row">
+                  <Tulot />
+                </div>
+              </section>
+            </Tab>
+          </Tabs>
+        </Row>
+      </Container>
+    </Container>
   );
 }
 

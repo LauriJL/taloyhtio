@@ -2,29 +2,31 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
 
-function MenotArkisto() {
-  const { yr } = useParams();
-  const baseURL = "http://127.0.0.1:8000/api/menotarkisto";
-  const link = `${baseURL}/${yr}`;
-  const [year, setYear] = useState();
+function MenotArkisto(props) {
+  const year = parseInt(props.yr);
+  const baseURL = "http://127.0.0.1:8000/api/menotarkisto/";
+  const linkMenot = baseURL + `${year}` + `-01-01&` + `${year}` + `-12-31`;
   const [menot, setMenot] = useState([]);
+  // Pagination
+  const [totalPages, setTotalPages] = useState(0);
   const [nextURL, setNextURL] = useState();
   const [prevURL, setPrevURL] = useState();
 
   const fetchData = async () => {
-    let response = await (await fetch(link)).json();
+    let response = await (await fetch(linkMenot)).json();
 
     setMenot(response.results);
-    setYear(yr.slice(0, 4));
 
+    // Page count
+    setTotalPages(Math.ceil(response.count / 10));
+    // URL for next page
     if (response.next) {
       setNextURL(response.next);
     } else {
       setNextURL(null);
     }
-
+    // URL for previous page
     if (response.previous) {
       setPrevURL(response.previous);
     } else {
@@ -34,11 +36,25 @@ function MenotArkisto() {
 
   const paginationHandler = async (url) => {
     let response = await (await fetch(url)).json();
-
     setNextURL(response.next);
     setPrevURL(response.previous);
     setMenot(response.results);
   };
+
+  // Pagination links
+  const links = [];
+  for (let i = 1; i <= totalPages; i++) {
+    links.push(
+      <li className="page-item">
+        <Link
+          onClick={() => paginationHandler(baseURL + `?page=${i}`)}
+          className="page-link"
+        >
+          {i}
+        </Link>
+      </li>
+    );
+  }
 
   useEffect(() => {
     fetchData();
@@ -49,8 +65,6 @@ function MenotArkisto() {
       <section className="container mt-4">
         <div className="row">
           <div className="col-md-12 col-12 mb-2 text-start">
-            <h4>Laskut vuonna {year}</h4>
-            <br />
             <div className="row">
               <div className="table-responsive">
                 <table className="table">
@@ -60,7 +74,6 @@ function MenotArkisto() {
                       <th>Summa</th>
                       <th>Maksupvm</th>
                       <th>Luokka</th>
-                      <th></th>
                       <th></th>
                     </tr>
                   </thead>
@@ -74,18 +87,10 @@ function MenotArkisto() {
                           <td>{menot.luokka.menoluokka}</td>
                           <td>
                             <Link
-                              to={`${menot.id}`}
+                              to={`../menot/${menot.id}`}
                               className="btn btn-outline-success btn-sm"
                             >
                               <i className="fa-regular fa-eye"></i> Tiedot
-                            </Link>
-                          </td>
-                          <td>
-                            <Link
-                              to="/menoluokat"
-                              className="btn btn-outline-primary btn-sm"
-                            >
-                              <i className="fa-solid fa-chart-pie"></i> Luokat
                             </Link>
                           </td>
                         </tr>
@@ -114,10 +119,11 @@ function MenotArkisto() {
                       </button>
                     </li>
                   )}
+                  {links}
                   {!nextURL && (
                     <li className="page-item">
                       <button className="page-link disabled">
-                        Seuraava <i className="fa-solid fa-angles-right"></i>
+                        <i className="fa-solid fa-angles-right"></i> Seuraava
                       </button>
                     </li>
                   )}

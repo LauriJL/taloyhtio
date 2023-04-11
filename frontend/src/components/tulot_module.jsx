@@ -2,7 +2,6 @@
 import React from "react";
 
 function TulotModule(props) {
-  console.log("props: ", props);
   return (
     <div>
       <div className="row">

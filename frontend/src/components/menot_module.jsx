@@ -16,7 +16,6 @@ function MenotModule(props) {
                   <th>Maksupvm</th>
                   <th>Luokka</th>
                   <th></th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -29,18 +28,10 @@ function MenotModule(props) {
                       <td>{item.luokka.menoluokka}</td>
                       <td>
                         <Link
-                          to={`${item.id}`}
+                          to={`menot/${item.id}`}
                           className="btn btn-outline-success btn-sm"
                         >
                           <i className="fa-regular fa-eye"></i> Tiedot
-                        </Link>
-                      </td>
-                      <td>
-                        <Link
-                          to="/menoluokat"
-                          className="btn btn-outline-primary btn-sm"
-                        >
-                          <i className="fa-solid fa-chart-pie"></i> Luokat
                         </Link>
                       </td>
                     </tr>

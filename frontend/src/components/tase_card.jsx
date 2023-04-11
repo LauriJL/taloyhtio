@@ -10,16 +10,14 @@ function TaseCard(props) {
         </div>
         <div className="card-body">
           {props.tulotmenot.map((tieto) => (
-            <>
-              <h5
-                key={tieto.tase}
-                style={{
-                  color: parseFloat(tieto.tase) < 0 ? "red" : "green",
-                }}
-              >
-                {tieto.tase} €
-              </h5>
-            </>
+            <h5
+              key={tieto.id}
+              style={{
+                color: parseFloat(tieto.tase) < 0 ? "red" : "green",
+              }}
+            >
+              {tieto.tase} €
+            </h5>
           ))}
         </div>
       </div>
