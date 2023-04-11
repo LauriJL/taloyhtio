@@ -6,16 +6,17 @@ import { Link } from "react-router-dom";
 // Assets
 import TulotModule from "./tulot_module";
 
-function Tulot() {
-  const baseURL = "http://127.0.0.1:8000/api/tulot/";
-  const link = `${baseURL}`;
+function TulotArkisto(props) {
+  const baseURL = "http://127.0.0.1:8000/api/tulotarkisto/";
+  const year = parseInt(props.yr);
+  const linkTulot = baseURL + `${year}` + `-01-01&` + `${year}` + `-12-31`;
   const [tulot, setTulot] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [nextURL, setNextURL] = useState();
   const [prevURL, setPrevURL] = useState();
 
   const fetchData = async () => {
-    let response = await (await fetch(link)).json();
+    let response = await (await fetch(linkTulot)).json();
     setTulot(response.results);
 
     // Page count
@@ -114,4 +115,4 @@ function Tulot() {
   );
 }
 
-export default Tulot;
+export default TulotArkisto;

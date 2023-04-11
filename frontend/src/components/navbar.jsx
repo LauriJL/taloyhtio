@@ -51,13 +51,6 @@ function NavBar() {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav className="ms-auto">
-              <NavDropdown title="Menot">
-                <NavDropdown.Item href="/menot">Laskut</NavDropdown.Item>
-                <NavDropdown.Item href="/menoluokat">
-                  Menot luokittain
-                </NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link href="/tulot">Tulot</Nav.Link>
               <NavDropdown title="Arkisto">
                 {yr.map((item) => (
                   <NavDropdown.Item key={item} href={archiveURL + `${item}`}>

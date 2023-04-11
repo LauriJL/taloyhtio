@@ -1,10 +1,9 @@
 // Packages
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function LaskunTiedotCard(props) {
-  console.log(props);
-
+  let navigate = useNavigate();
   return (
     <div className="col-12 col-md-12 mb-4">
       <div className="card">
@@ -71,11 +70,12 @@ function LaskunTiedotCard(props) {
           </table>
         </div>
         <div className="card-footer text-end">
-          <Link to="/menot">
-            <button title="" className="btn btn-outline-danger btn-sm">
-              <i class="fa-regular fa-circle-xmark"></i>
-            </button>
-          </Link>
+          <button
+            onClick={() => navigate(-1)}
+            className="btn btn-outline-danger btn-sm"
+          >
+            <i class="fa-regular fa-circle-xmark"></i>
+          </button>
         </div>
       </div>
     </div>

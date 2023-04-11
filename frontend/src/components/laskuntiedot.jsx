@@ -23,7 +23,6 @@ function LaskunTiedot(props) {
   useEffect(() => {
     fetchData();
   }, []);
-  //console.log(lasku);
 
   return (
     <section className="container mt-4">
