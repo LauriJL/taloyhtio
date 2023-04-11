@@ -47,7 +47,7 @@ function NavBar() {
       </style>
       <Navbar variant="color">
         <Container>
-          <Navbar.Brand href="/">Oy Taloyhtiö Ab</Navbar.Brand>
+          <Navbar.Brand href="/">As Oy Kirjokallionkuja 5</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav className="ms-auto">
