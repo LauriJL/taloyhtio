@@ -19,7 +19,7 @@ function MenotArkisto(props) {
     setMenot(response.results);
 
     // Page count
-    setTotalPages(Math.ceil(response.count / 10));
+    setTotalPages(Math.ceil(response.count / 8));
     // URL for next page
     if (response.next) {
       setNextURL(response.next);
@@ -36,7 +36,6 @@ function MenotArkisto(props) {
 
   const paginationHandler = async (url) => {
     let response = await (await fetch(url)).json();
-
     setNextURL(response.next);
     setPrevURL(response.previous);
     setMenot(response.results);
@@ -48,7 +47,7 @@ function MenotArkisto(props) {
     links.push(
       <li className="page-item" key={i}>
         <Link
-          onClick={() => paginationHandler(baseURL + `?page=${i}`)}
+          onClick={() => paginationHandler(linkMenot + `?page=${i}`)}
           className="page-link"
         >
           {i}

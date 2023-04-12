@@ -26,6 +26,11 @@ class StandardResultsSetPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 8
 
+
+class ExpandedResultsSetPagination(PageNumberPagination):
+    page_size = 12
+    max_page_size = 12
+
 # Menot
 
 
@@ -41,9 +46,7 @@ class MenotDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Menot.objects.all()
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super(MenotDetail, self).get_context_data(**kwargs)
-        # Add extra context from another model
         context['menoerittelyt'] = MenoErittelyDetail.objects.filter(
             lasku_id='id')
         return context
@@ -79,6 +82,7 @@ class MenoluokatViewSet(viewsets.ModelViewSet):
 
 class MenotLuokittainViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MenotLuokittainSerializer
+    pagination_class = ExpandedResultsSetPagination
     queryset = models.MenotLuokittain.objects.all().filter(vuosi=currentYear)
 
     def menotLuokittain_Chart(request):
@@ -165,6 +169,7 @@ class SummatArchiveViewSet(generics.ListAPIView):
 
 class MenotLuokittainArchiveViewSet(generics.ListAPIView):
     serializer_class = serializers.MenotLuokittainSerializer
+    pagination_class = ExpandedResultsSetPagination
     # queryset = models.MenotLuokittain.objects.all().filter(vuosi=2022)
 
     def get_queryset(self):

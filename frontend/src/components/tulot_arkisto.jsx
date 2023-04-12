@@ -20,7 +20,7 @@ function TulotArkisto(props) {
     setTulot(response.results);
 
     // Page count
-    setTotalPages(Math.ceil(response.count / 10));
+    setTotalPages(Math.ceil(response.count / 8));
     // URL for next page
     if (response.next) {
       setNextURL(response.next);
@@ -48,7 +48,7 @@ function TulotArkisto(props) {
     links.push(
       <li className="page-item" key={i}>
         <Link
-          onClick={() => paginationHandler(baseURL + `?page=${i}`)}
+          onClick={() => paginationHandler(linkTulot + `?page=${i}`)}
           className="page-link"
         >
           {i}
